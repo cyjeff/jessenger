@@ -21,8 +21,8 @@ namespace CSChat.Models
                 .Property(b => b.UpdateTime)
                 .HasDefaultValueSql("getdate()");
             modelBuilder.Entity<Chat>().HasData(
-                new { ChatId = 1, UserId = 1, Text = "hello" },
-                new { ChatId = 2, UserId = 1, Text = "world" }
+                new { ChatId = 1, User = "admin", Text = "hello" },
+                new { ChatId = 2, User = "admin", Text = "world" }
                 );
         }
     }

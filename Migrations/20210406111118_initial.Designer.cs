@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CSChat.Migrations
 {
     [DbContext(typeof(MyDatabaseContext))]
-    [Migration("20210406073913_initial")]
+    [Migration("20210406111118_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,8 +36,8 @@ namespace CSChat.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getdate()");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("User")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ChatId");
 
@@ -48,13 +48,13 @@ namespace CSChat.Migrations
                         {
                             ChatId = 1,
                             Text = "hello",
-                            UserId = 1
+                            User = "admin"
                         },
                         new
                         {
                             ChatId = 2,
                             Text = "world",
-                            UserId = 1
+                            User = "admin"
                         });
                 });
 #pragma warning restore 612, 618

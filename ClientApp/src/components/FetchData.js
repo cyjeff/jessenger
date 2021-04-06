@@ -59,9 +59,5 @@ export class FetchData extends Component {
     const response = await fetch("weatherforecast");
     const data = await response.json();
     this.setState({ forecasts: data, loading: false });
-
-    const response2 = await fetch("chat");
-    const data2 = await response2.json();
-    console.log(data2);
   }
 }

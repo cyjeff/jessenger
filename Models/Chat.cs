@@ -10,7 +10,7 @@ namespace CSChat.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ChatId { get; set; }
 
-        public int UserId { get; set; }
+        public string User { get; set; }
 
         public string Text { get; set; }
 

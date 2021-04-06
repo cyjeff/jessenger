@@ -34,8 +34,8 @@ namespace CSChat.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getdate()");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("User")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ChatId");
 
@@ -46,13 +46,13 @@ namespace CSChat.Migrations
                         {
                             ChatId = 1,
                             Text = "hello",
-                            UserId = 1
+                            User = "admin"
                         },
                         new
                         {
                             ChatId = 2,
                             Text = "world",
-                            UserId = 1
+                            User = "admin"
                         });
                 });
 #pragma warning restore 612, 618

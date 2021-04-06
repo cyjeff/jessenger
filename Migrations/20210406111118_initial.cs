@@ -13,7 +13,7 @@ namespace CSChat.Migrations
                 {
                     ChatId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    User = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdateTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()")
                 },
@@ -24,13 +24,13 @@ namespace CSChat.Migrations
 
             migrationBuilder.InsertData(
                 table: "Chat",
-                columns: new[] { "ChatId", "Text", "UserId" },
-                values: new object[] { 1, "hello", 1 });
+                columns: new[] { "ChatId", "Text", "User" },
+                values: new object[] { 1, "hello", "admin" });
 
             migrationBuilder.InsertData(
                 table: "Chat",
-                columns: new[] { "ChatId", "Text", "UserId" },
-                values: new object[] { 2, "world", 1 });
+                columns: new[] { "ChatId", "Text", "User" },
+                values: new object[] { 2, "world", "admin" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
