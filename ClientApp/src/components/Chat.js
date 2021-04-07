@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./Chat.css";
 import * as signalR from "@microsoft/signalr";
+import { animateScroll } from "react-scroll";
 
 export function Chat() {
   const [dialog, SetDialog] = useState([]);
   const [user, SetUser] = useState(null);
   const [input, SetInput] = useState(null);
   const [update, SetUpdate] = useState(false);
+  const refDiv = useRef(null);
 
   // SignalR Message Receiver
   let connection = new signalR.HubConnectionBuilder()
@@ -24,7 +26,12 @@ export function Chat() {
       SetDialog(data);
     }
     getData();
-  }, [update]);
+    scrollToBottom();
+  }, [user, update]);
+
+  function scrollToBottom() {
+    animateScroll.scrollToBottom();
+  }
 
   async function submit() {
     const body = { User: user, Text: input };
@@ -47,7 +54,7 @@ export function Chat() {
   function dialogBox() {
     return (
       <>
-        <div className="container">
+        <div className="container" id="scrollTgt">
           <div className="headblock"></div>
           {dialog.map((item) => {
             if (item.user === user) {
@@ -67,6 +74,7 @@ export function Chat() {
             }
           })}
           <div className="headblock"></div>
+          <div ref={refDiv}></div>
         </div>
         <div className="msgInputBox">
           <input
