@@ -8,7 +8,8 @@ export function Chat() {
   const [user, SetUser] = useState(null);
   const [input, SetInput] = useState(null);
   const [update, SetUpdate] = useState(false);
-  const refDiv = useRef(null);
+  const inputObj = useRef(null);
+  const msgObj = useRef(null);
 
   // SignalR Message Receiver
   let connection = new signalR.HubConnectionBuilder()
@@ -34,6 +35,7 @@ export function Chat() {
   }
 
   async function submit() {
+    if (!input) return;
     const body = { User: user, Text: input };
     await fetch("api/Chat", {
       method: "POST",
@@ -44,6 +46,7 @@ export function Chat() {
     });
     SetInput(null);
     SetUpdate(!update);
+    msgObj.current.value = "";
 
     // SignalR Message Sender
     connection.invoke("SendMessage", "flag").catch(function (err) {
@@ -55,7 +58,6 @@ export function Chat() {
     return (
       <>
         <div className="container" id="scrollTgt">
-          <div className="headblock"></div>
           {dialog.map((item) => {
             if (item.user === user) {
               return (
@@ -73,18 +75,21 @@ export function Chat() {
               );
             }
           })}
-          <div className="headblock"></div>
-          <div ref={refDiv}></div>
+          <div className="filler"></div>
         </div>
         <div className="msgInputBox">
           <input
+            className="inputObj"
             type="text"
             onChange={(e) => {
               SetInput(e.target.value);
             }}
+            ref={msgObj}
             placeholder="Input message"
           ></input>
-          <button onClick={submit}>Go</button>
+          <button className="btnObj" onClick={submit}>
+            Send
+          </button>
         </div>
       </>
     );
@@ -92,8 +97,12 @@ export function Chat() {
   function userInput() {
     return (
       <div className="inputBox">
-        <div className="headblock"></div>
         <input
+          ref={inputObj}
+          onAnimationEnd={() => {
+            inputObj.current.classList.toggle("inputObjWarn");
+          }}
+          className="inputObj"
           type="text"
           onChange={(e) => {
             SetInput(e.target.value);
@@ -101,9 +110,14 @@ export function Chat() {
           placeholder="Input user name"
         ></input>
         <button
+          className="btnObj"
           onClick={() => {
-            SetUser(input);
-            SetInput(null);
+            if (input === null) {
+              inputObj.current.classList.toggle("inputObjWarn");
+            } else {
+              SetUser(input);
+              SetInput(null);
+            }
           }}
         >
           Go
@@ -116,7 +130,7 @@ export function Chat() {
 
   return (
     <>
-      <div className="header">CSChat</div>
+      <div className="header">Jessenger</div>
       {content}
     </>
   );

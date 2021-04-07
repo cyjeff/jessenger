@@ -1,18 +1,28 @@
 body {
   width: 100%;
   overflow-x: hidden;
+  margin: 0;
+  font-size: larger;
+  font-family: sans-serif;
 }
 
+.inputBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
 .container {
   padding: 0;
 }
 
 .rowMy {
   display: flex;
+  flex-wrap: wrap;
   justify-content: right;
   align-items: center;
   height: 50px;
-  margin: 15px;
+  margin: -5px 15px 30px 15px;
   text-align: right;
 }
 
@@ -22,7 +32,7 @@ body {
   justify-content: left;
   align-items: center;
   height: 50px;
-  margin: 15px;
+  margin: 10px 15px 20px 15px;
 }
 
 .username {
@@ -33,6 +43,30 @@ body {
   margin-left: 5px;
 }
 
+.myLine {
+  display: flex;
+  align-items: center;
+  background-color: rgb(31, 115, 252);
+  color: white;
+  text-align: right;
+  border-radius: 20px;
+  height: 40px;
+  position: absolute;
+  right: 10px;
+  margin-top: 65px;
+  padding: 0 15px 0 15px;
+}
+
+.pplsLine {
+  display: flex;
+  align-items: center;
+  background-color: rgb(240, 241, 242);
+  border-radius: 20px;
+  margin-top: 5px;
+  height: 40px;
+  padding: 0 15px 0 15px;
+}
+
 .msgInputBox {
   position: sticky;
   background-color: white;
@@ -40,8 +74,7 @@ body {
   left: 0;
   width: 100%;
   height: 10vh;
-  border-top: #dddddd 1px solid;
-  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0.5rem 0.75rem rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -50,41 +83,58 @@ body {
 .header {
   position: sticky;
   background-color: white;
+  color: gray;
   top: 0;
   left: 0;
   width: 100%;
   height: 10vh;
-  border-bottom: #dddddd 1px solid;
-  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0.5rem 0.75rem rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2;
+  font-size: 1.5em;
 }
 
-.myLine {
-  display: flex;
-  align-items: center;
-  background-color: #7ce9e9;
-  text-align: right;
-  border-radius: 15px;
+.inputObj {
+  width: 70%;
   height: 30px;
-  position: absolute;
-  padding: 15px;
-  margin-top: 60px;
-  right: 10px;
-}
-
-.pplsLine {
-  display: flex;
-  align-items: center;
-  background-color: #aaaaaa;
+  border: none;
+  background-color: rgb(244, 245, 246);
   border-radius: 15px;
-  height: 30px;
-  padding: 15px;
+  padding-left: 10px;
 }
 
-.headblock {
+.inputObjWarn {
+  width: 70%;
+  height: 30px;
+  border: none;
+  background-color: red;
+  border-radius: 15px;
+  padding-left: 10px;
+  animation: fade 500ms ease-out forwards;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}
+
+.btnObj {
+  height: 30px;
+  border-radius: 15px;
+  border: none;
+  margin-left: 20px;
+  background-color: rgb(31, 115, 252);
+  color: white;
+  padding: 0 10px 0 10px;
+}
+
+.filler {
   width: 100%;
-  height: 5vh;
+  height: 15px;
 }
