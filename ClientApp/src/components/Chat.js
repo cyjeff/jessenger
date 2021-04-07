@@ -1,11 +1,21 @@
 import React, { useEffect, useState } from "react";
 import "./Chat.css";
+import * as signalR from "@microsoft/signalr";
 
 export function Chat() {
   const [dialog, SetDialog] = useState([]);
   const [user, SetUser] = useState(null);
   const [input, SetInput] = useState(null);
   const [update, SetUpdate] = useState(false);
+
+  // SignalR Message Receiver
+  let connection = new signalR.HubConnectionBuilder()
+    .withUrl("/message")
+    .build();
+  connection.on("ReceiveMessage", () => {
+    SetUpdate(!update);
+  });
+  connection.start();
 
   useEffect(() => {
     async function getData() {
@@ -27,6 +37,11 @@ export function Chat() {
     });
     SetInput(null);
     SetUpdate(!update);
+
+    // SignalR Message Sender
+    connection.invoke("SendMessage", "flag").catch(function (err) {
+      return console.error(err.toString());
+    });
   }
 
   function dialogBox() {

@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 
 using Microsoft.EntityFrameworkCore;
 using CSChat.Models;
+using CSChat.Hubs;
 
 namespace CSChat
 {
@@ -33,6 +34,8 @@ namespace CSChat
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,6 +63,7 @@ namespace CSChat
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapHub<ChatHub>("/message");
             });
 
             app.UseSpa(spa =>
