@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./Chat.css";
 
 export function Chat() {
   const [dialog, SetDialog] = useState([]);
@@ -10,7 +11,6 @@ export function Chat() {
     async function getData() {
       const response = await fetch("api/Chat");
       const data = await response.json();
-      console.log(data);
       SetDialog(data);
     }
     getData();
@@ -31,11 +31,29 @@ export function Chat() {
 
   function dialogBox() {
     return (
-      <div className="container">
-        {dialog.map((item) => {
-          return <div key={item.chatId}>{item.text}</div>;
-        })}
-        <div className="inputBox">
+      <>
+        <div className="container">
+          <div className="headblock"></div>
+          {dialog.map((item) => {
+            if (item.user === user) {
+              return (
+                <div key={item.chatId} className="rowMy">
+                  <div className="username">{item.user}</div>
+                  <div className="myLine">{item.text}</div>
+                </div>
+              );
+            } else {
+              return (
+                <div key={item.chatId} className="rowPpl">
+                  <div className="username">{item.user}</div>
+                  <div className="pplsLine">{item.text}</div>
+                </div>
+              );
+            }
+          })}
+          <div className="headblock"></div>
+        </div>
+        <div className="msgInputBox">
           <input
             type="text"
             onChange={(e) => {
@@ -45,12 +63,13 @@ export function Chat() {
           ></input>
           <button onClick={submit}>Go</button>
         </div>
-      </div>
+      </>
     );
   }
   function userInput() {
     return (
       <div className="inputBox">
+        <div className="headblock"></div>
         <input
           type="text"
           onChange={(e) => {
@@ -72,5 +91,10 @@ export function Chat() {
 
   let content = user ? dialogBox() : userInput();
 
-  return content;
+  return (
+    <>
+      <div className="header">CSChat</div>
+      {content}
+    </>
+  );
 }
