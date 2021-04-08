@@ -22,7 +22,7 @@ export function Chat() {
     SetConnection(newConnection);
   }, []);
 
-  // SignalR Mennsnger Receiver
+  // SignalR Messenger Receiver
   useEffect(() => {
     if (connection) {
       connection
@@ -30,7 +30,7 @@ export function Chat() {
         .then((result) => {
           console.log("SignalR Connected!");
           connection.on("ReceiveMessage", (message) => {
-            SetUpdate(!update);
+            SetUpdate((update) => !update);
           });
         })
         .catch((e) => console.log("Connection failed: ", e));
@@ -65,7 +65,7 @@ export function Chat() {
     SetUpdate(!update);
     msgObj.current.value = "";
 
-    // SignalR Mennsnger Sender
+    // SignalR Messenger Sender
     if (connection.connectionStarted) {
       try {
         await connection.send("SendMessage", "flag");
