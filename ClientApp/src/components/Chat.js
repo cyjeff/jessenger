@@ -62,7 +62,7 @@ export function Chat() {
       body: JSON.stringify(body),
     });
     SetInput(null);
-    SetUpdate(!update);
+    //SetUpdate(!update);
     msgObj.current.value = "";
 
     // SignalR Messenger Sender

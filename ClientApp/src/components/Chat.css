@@ -19,11 +19,12 @@ body {
 .rowMy {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: row-reverse;
+  text-align: right;
   justify-content: right;
   align-items: center;
   height: 50px;
-  margin: -5px 15px 30px 15px;
-  text-align: right;
+  margin: 10px 15px 20px 15px;
 }
 
 .rowPpl {
@@ -48,12 +49,9 @@ body {
   align-items: center;
   background-color: rgb(31, 115, 252);
   color: white;
-  text-align: right;
   border-radius: 20px;
   height: 40px;
-  position: absolute;
-  right: 10px;
-  margin-top: 65px;
+  margin-top: 5px;
   padding: 0 15px 0 15px;
 }
 
@@ -100,6 +98,7 @@ body {
   width: 70%;
   height: 30px;
   border: none;
+  font-size: 16px;
   background-color: rgb(244, 245, 246);
   border-radius: 15px;
   padding-left: 10px;
