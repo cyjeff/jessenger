@@ -4,6 +4,7 @@ import * as signalR from "@microsoft/signalr";
 import { animateScroll } from "react-scroll";
 
 export function Chat() {
+  const [connection, SetConnection] = useState(null);
   const [dialog, SetDialog] = useState([]);
   const [user, SetUser] = useState(null);
   const [input, SetInput] = useState(null);
@@ -11,14 +12,30 @@ export function Chat() {
   const inputObj = useRef(null);
   const msgObj = useRef(null);
 
-  // SignalR Message Receiver
-  let connection = new signalR.HubConnectionBuilder()
-    .withUrl("/message")
-    .build();
-  connection.on("ReceiveMessage", () => {
-    SetUpdate(!update);
-  });
-  connection.start();
+  // SignalR Setup Connection
+  useEffect(() => {
+    const newConnection = new signalR.HubConnectionBuilder()
+      .withUrl("message")
+      .withAutomaticReconnect()
+      .build();
+
+    SetConnection(newConnection);
+  }, []);
+
+  // SignalR Mennsnger Receiver
+  useEffect(() => {
+    if (connection) {
+      connection
+        .start()
+        .then((result) => {
+          console.log("SignalR Connected!");
+          connection.on("ReceiveMessage", (message) => {
+            SetUpdate(!update);
+          });
+        })
+        .catch((e) => console.log("Connection failed: ", e));
+    }
+  }, [connection]);
 
   useEffect(() => {
     async function getData() {
@@ -48,10 +65,16 @@ export function Chat() {
     SetUpdate(!update);
     msgObj.current.value = "";
 
-    // SignalR Message Sender
-    connection.invoke("SendMessage", "flag").catch(function (err) {
-      return console.error(err.toString());
-    });
+    // SignalR Mennsnger Sender
+    if (connection.connectionStarted) {
+      try {
+        await connection.send("SendMessage", "flag");
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      alert("No connection to server yet.");
+    }
   }
 
   function dialogBox() {
