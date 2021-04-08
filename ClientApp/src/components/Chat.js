@@ -135,7 +135,7 @@ export function Chat() {
         <button
           className="btnObj"
           onClick={() => {
-            if (input === null) {
+            if (input === null || input.length > 20) {
               inputObj.current.classList.toggle("inputObjWarn");
             } else {
               SetUser(input);

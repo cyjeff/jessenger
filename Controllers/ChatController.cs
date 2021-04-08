@@ -25,7 +25,9 @@ namespace CSChat.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Chat>>> GetAllChat()
         {
-            return await _context.Chat.ToListAsync();
+            var items = _context.Chat.OrderByDescending(u => u.ChatId).Take(50).OrderBy(u=>u.ChatId);
+            return await items.ToListAsync();
+            //return await _context.Chat.ToListAsync();
         }
 
         // GET: api/Chat/id
